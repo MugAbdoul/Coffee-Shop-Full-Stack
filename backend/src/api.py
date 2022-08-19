@@ -18,7 +18,7 @@ CORS(app)
 !! NOTE THIS MUST BE UNCOMMENTED ON FIRST RUN
 !! Running this funciton will add one
 '''
-db_drop_and_create_all()
+# db_drop_and_create_all()
 
 # ROUTES
 '''
@@ -34,12 +34,12 @@ db_drop_and_create_all()
 def drinks():
 
     fetch_drinks = Drink.query.all()
-    if not drinks:
+    if not fetch_drinks:
         abort(404)
     
     drinks = [drink.short() for drink in fetch_drinks]
 
-    return jsonify({"success": True, "drinks": drinks}, 200)
+    return jsonify({"success": True, "drinks": drinks}), 200
 
 
 '''
@@ -55,12 +55,12 @@ def drinks():
 def drinks_detail(payload):
 
     fetch_drinks = Drink.query.all()
-    if not drinks:
+    if not fetch_drinks:
         abort(404)
     
     drinks = [drink.long() for drink in fetch_drinks]
 
-    return jsonify({"success": True, "drinks": drinks}, 200)
+    return jsonify({"success": True, "drinks": drinks}), 200
 
 '''
 @TODO implement endpoint
@@ -83,7 +83,7 @@ def insert_drinks(payload):
         new_drink.insert()
         drink = [new_drink.long()]
 
-        return jsonify({"success": True, "drinks": drink}, 200)
+        return jsonify({"success": True, "drinks": drink}), 200
 
     except:
         db.session.rollback()
@@ -121,7 +121,7 @@ def update_drinks(id, payload):
 
         drink = [up_drink.long()]
 
-        return jsonify({"success": True, "drinks": drink}, 200)
+        return jsonify({"success": True, "drinks": drink}), 200
 
     except:
         db.session.rollback()
@@ -155,7 +155,7 @@ def delete_drinks(id, payload):
         db.session.rollback()
         abort(422)
 
-    return jsonify({"success": True, "delete": drink.id}, 200)
+    return jsonify({"success": True, "delete": drink.id}), 200
 
 
 # Error Handling
@@ -184,6 +184,14 @@ def unprocessable(error):
 
 '''
 
+@app.errorhandler(500)
+def internal_server_error(error):
+    return jsonify({
+        'success': False,
+        'error': 500,
+        'message': 'Internal Server Error'
+    }), 500
+
 '''
 @TODO implement error handler for 404
     error handler should conform to general task above
@@ -200,34 +208,13 @@ def unprocessable(error):
 @TODO implement error handler for AuthError
     error handler should conform to general task above
 '''
-@app.errorhandler(400)
-def unprocessable(error):
-    return jsonify({
-        "success": False,
-        "error": 400,
-        "message": "Bad request"
-    }), 400
 
-@app.errorhandler(401)
-def unprocessable(error):
-    return jsonify({
-        "success": False,
-        "error": 401,
-        "message": "Unauthorized"
-    }), 401
-
-@app.errorhandler(403)
-def unprocessable(error):
-    return jsonify({
-        "success": False,
-        "error": 403,
-        "message": "Forbidden "
-    }), 403
-
-@app.errorhandler(500)
-def internal_server_error(error):
+@app.errorhandler(AuthError)
+def auth_error(error):
     return jsonify({
         'success': False,
-        'error': 500,
-        'message': 'Internal Server Error'
-    }), 500
+        'error': error.status_code,
+        'message': error.error['description']
+    }), error.status_code
+
+
