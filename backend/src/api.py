@@ -18,7 +18,7 @@ CORS(app)
 !! NOTE THIS MUST BE UNCOMMENTED ON FIRST RUN
 !! Running this funciton will add one
 '''
-#db_drop_and_create_all()
+db_drop_and_create_all()
 
 # ROUTES
 '''
@@ -56,7 +56,6 @@ def drinks_detail(payload):
 
     fetch_drinks = Drink.query.all()
     if not fetch_drinks:
-        print(fetch_drinks)
         abort(404)
     
     drinks = [drink.long() for drink in fetch_drinks]
@@ -245,15 +244,3 @@ def auth_error(error):
         'error': error.status_code,
         'message': error.error['description']
     }), error.status_code
-
-# Barasti
-# eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjFvVVRYZEpDMWx6VGdrbEFCOTlVbyJ9.eyJpc3MiOiJodHRwczovL2Rldi1qOXAxazk5NC51cy5hdXRoMC5jb20vIiwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMDc5ODcxMDY5NzE1MDE3NTcxNzAiLCJhdWQiOiJjb2ZmZWVTaG9wIiwiaWF0IjoxNjYwOTMwNjYzLCJleHAiOjE2NjA5Mzc4NjMsImF6cCI6IlNGYWE0ZTR5SHZ5ak5jYVUwOTZpcXNkZVJLV05NQjNmIiwic2NvcGUiOiIiLCJwZXJtaXNzaW9ucyI6WyJnZXQ6ZHJpbmtzIiwiZ2V0OmRyaW5rcy1kZXRhaWwiXX0.mcay9hl6UTk2BfPodL8x7-KA2AKn-DfKACw9hjG5Jk2czp8KrQttilShr3sy8a4PV8mT7vADKE-jc9WEmPozNBVkWqbwkNYH-mDt309Z0LJXD_EGFfq4CDm1eEmzt-s8h4CC8CtYh1rGg9rGLvf0s3v9_rpkuv_pegkKfFSY373W7AAoLMtuZVJnDWuSwCCMORlb8NKwxuc5K4pNORjrARKRvIrn_pZtONQJYgjiUlMteBaPPEmyseRAbKcoqcqFY9StTfJntXrwlsdvgsnoS1BPASzBAwXPoApKQ6Xkuli1GsnJdy6ka7GjU6ujSZV55nS92m2SOE-O7oCoOvZjJQ
-
-
-
-
-# -------------------------------------------
-
-# Manager
-
-# eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjFvVVRYZEpDMWx6VGdrbEFCOTlVbyJ9.eyJpc3MiOiJodHRwczovL2Rldi1qOXAxazk5NC51cy5hdXRoMC5jb20vIiwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMDIyMzg5NDU0MDg4MzU0MDI1MDYiLCJhdWQiOiJjb2ZmZWVTaG9wIiwiaWF0IjoxNjYwOTI2ODAxLCJleHAiOjE2NjA5MzQwMDEsImF6cCI6IlNGYWE0ZTR5SHZ5ak5jYVUwOTZpcXNkZVJLV05NQjNmIiwic2NvcGUiOiIiLCJwZXJtaXNzaW9ucyI6WyJkZWxldGU6ZHJpbmtzIiwiZ2V0OmRyaW5rcyIsImdldDpkcmlua3MtZGV0YWlsIiwicGF0Y2g6ZHJpbmtzIiwicG9zdDpkcmlua3MiXX0.GU7SdUuVvwsl5M2HJd_yeyX2vpWsr84zp_Vf_c0_2zWHdENRDiGDre0Fmhe1sRgs2L8LbIGQtoOryTpzNqCvS99Vfws0bGbsOBWxsw_8_BAuNfaLLFtxTAyfmLxu6UBxMpm8c3pFbyM6pCoCBk6GJRIvXP-zbM41RYqaCt-nWsHTWbAvYsvLCxYO5Av-DkS1RjsKVBBCsyeJKkxoasEUJzAOBsxuBWk0tQbd0MJzgrP0A7p8EK4hJtirmXd0MhplDOWeYkupuV9rDNRs3v75ZzBFnMXZbByJ5ucrrbBmhAuCte8oFBSRmK9dqmo35VCvcaD24QQQPhPlP4Sv85c1FQ

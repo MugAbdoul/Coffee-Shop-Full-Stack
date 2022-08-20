@@ -175,7 +175,6 @@ def requires_auth(permission=''):
                 payload = verify_decode_jwt(token)
             except:
                 abort(403)
-                
             check_permissions(permission, payload)
 
             return f(payload, *args, **kwargs)
@@ -183,4 +182,3 @@ def requires_auth(permission=''):
         return wrapper
 
     return requires_auth_decorator
-
